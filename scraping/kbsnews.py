@@ -43,7 +43,12 @@ for dt in dt_list:
             URL = f"http://news.kbs.co.kr/news/view.do?ncd={page['NEWS_CODE']}"
             response = requests.get(URL)
             soup = BeautifulSoup(response.text, "html.parser")
-
+            for view_img_wrap in soup.select('#cont_newstext .view_img_wrap'):
+                view_img_wrap.extract()
+            for br in soup.select('#cont_newstext br'):
+                br.extract()
+            for b in soup.select('#cont_newstext b'):
+                b.extract()
             news_data = {
                             "date":dt,
                             "title":soup.select_one('.tit-s').text,
